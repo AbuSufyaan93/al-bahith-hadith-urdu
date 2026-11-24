@@ -1,0 +1,2 @@
+import{Ft as e,Gt as t,It as n,Q as r,W as i,Z as a,i as o,r as s,xt as c}from"./BDCxsaCy.js";import{t as l}from"./CLUBJt_8.js";var u=new Set([`$$slots`,`$$events`,`$$legacy`]);function d(d,f){n(f,!0);let p=s(f,u),m=[[`path`,{d:`m15 18-6-6 6-6`}]];l(d,o({name:`chevron-left`},()=>p,{get iconNode(){return m},children:(e,n)=>{var o=r(),s=c(o);i(s,()=>f.children??t),a(e,o)},$$slots:{default:!0}})),e()}export{d as t};
+//# sourceMappingURL=MS3fSiJ4.js.map

@@ -1,0 +1,50 @@
+{
+  "project_name": "الباحث الحديثي — اردو، عربی (Al-Bahith Al-Hadithi)",
+  "architecture": "cloud_drive_vault_with_minimal_local_pc_runtime",
+  "local_pc_target_dir": "D:\\علمی معاون پرجیکٹ\\حدیث سرچ",
+  "google_drive_folder_name": "حدیث سرچ",
+  "google_drive_folder_id": "1c7w9HLYONrrdcvqh7uPhQdE0sAOqHmLA",
+  "google_drive_parent_folder_id": "1ztPkG0yJL1s7eiI9HE2C0G05BOMNUAaK",
+  "google_drive_master_db_file_id": "1Rffhqsk_zX4P3iydpmiDCcmFCvbfAQqu",
+  "cloud_relative_db_paths": [
+    "cloud_data/database/al_bahith_hadith.db",
+    "database/al_bahith_hadith.db"
+  ],
+  "google_drive_mount_subpaths": [
+    "My Drive\\علمی پروجیکٹ\\حدیث سرچ",
+    "My Drive\\علمی معاون پرجیکٹ\\حدیث سرچ",
+    "My Drive\\حدیث سرچ",
+    "ملفاتي\\علمی پروجیکٹ\\حدیث سرچ",
+    "Shared with me\\علمی پروجیکٹ\\حدیث سرچ",
+    "Shared with me\\حدیث سرچ"
+  ],
+  "local_pc_allowed_entries": [
+    "backend",
+    "pipeline",
+    "database/catalogs",
+    "tools",
+    "Start-Al-Bahith-Hadith.bat",
+    "تشغيل_الباحث_الحديثي.bat",
+    "Setup-Local-PC-D-Drive.bat",
+    "سیٹ_اپ_لوکل_پی_سی.bat",
+    "Sync-To-Google-Drive.bat",
+    "requirements.txt",
+    "cloud_runtime_config.json",
+    "README.md",
+    "ACTIVE_LINKS.txt"
+  ],
+  "cloud_only_excluded_from_pc": [
+    "cloud_data",
+    "datasets_raw",
+    "exports",
+    "frontend",
+    "Dockerfile",
+    "docker-compose.yml",
+    "backend/static/_app",
+    "database/al_bahith_hadith.db",
+    "database/al_bahith_hadith.db-wal",
+    "database/al_bahith_hadith.db-shm",
+    "database/postgres_schema.sql",
+    "database/schema.sql"
+  ]
+}

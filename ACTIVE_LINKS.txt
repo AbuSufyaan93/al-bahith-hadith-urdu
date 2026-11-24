@@ -1,0 +1,44 @@
+============================================================================
+  الباحث الحديثي — اردو، عربی (Al-Bahith Al-Hadithi — Salafi Urdu & Arabic)
+============================================================================
+
+0. Instant Live Web Portal (24/7 Direct Browser Link — Zero Setup Needed):
+   Live URL     : https://abusufyaan93.github.io/al-bahith-hadith-urdu/
+   GitHub Repo  : https://github.com/AbuSufyaan93/al-bahith-hadith-urdu
+
+1. Google Drive Master Cloud Vault (حدیث سرچ — 3.25 GB All Heavy Data):
+   Web URL      : https://drive.google.com/drive/folders/1c7w9HLYONrrdcvqh7uPhQdE0sAOqHmLA
+   Windows Mount: G:\My Drive\علمی پروجیکٹ\حدیث سرچ\cloud_data
+
+1B. Minimal Local PC Runtime Folder (~16.5 MB Only — 99.5% Disk Saved):
+   Local Path   : D:\علمی معاون پرجیکٹ\حدیث سرچ
+   Local URLs   : http://localhost:8088   AND   http://localhost:8080  (IPv4 + IPv6)
+   Setup Script : Setup-Local-PC-D-Drive.bat  (or سیٹ_اپ_لوکل_پی_سی.bat)
+   Launcher     : Start-Al-Bahith-Hadith.bat  (or تشغيل_الباحث_الحديثي.bat)
+   Silent BG    : Start-Background-Silent.vbs / Install-Windows-AutoStart.bat
+   Storage API  : /api/v1/storage-status
+
+
+2. Original Reference Architecture Replicated (100% Parity):
+   https://hadeeth.com/ (الباحث الحديثي — نقاية)
+
+3. Sister Reference Project (الباحث القرآني — اردو، عربی):
+   https://drive.google.com/drive/folders/1RByQ_1RlaKshJWFf2D1vvtDAIZVZnTtM
+
+4. Rekhta & Qari Urdu-Arabic Lexicon Source Folder:
+   https://drive.google.com/drive/folders/1c3Frkquc1dGtiDcdJUEn1eA329m3XYft
+
+5. Key Platform Routes:
+   - /                          (فوری تلاشِ حدیث مع ۵ فلٹرز اور سلفی اردو ترجمہ)
+   - /collections               (امہاتِ کتبِ سنت — ۳۳ بنیادی مصادِر)
+   - /canonical                 (صحاح ستہ، موطا مالک و اربعینات — ۳۶,۱۰۴ انسانی اردو احادیث)
+   - /hadeethenc                (موسوعۃ الاحادیث النبویہ المشروحہ — ۲,۲۲۰ احادیث مع اردو شرح و فوائد)
+   - /hadith/5                  (تفصیلی صفحۂ حدیث مع تخریج و سلسلۂ اسناد)
+   - /hadith/5/chains           (انٹرایکٹو شجرۂ اسانید و مدارِ سند)
+   - /narrators                 (موسوعۃ الرواۃ والجرح والتعدیل و شبکۂ شیوخ و تلامذہ)
+   - /subjects                  (شجرۂ موضوعاتِ سنت)
+   - /quran                     (القرآن والسنۃ — آیاتِ متعلقہ باحادیث)
+   - /lexicon                   (غریب الحدیث + ریختہ و قاری ۲,۸۳,۶۰۱ الفاظ اردو-عربی لغت)
+   - /dorar-articles            (عوام میں مشہور غیر ثابت روایات — ۱,۴۰۵ تحقیقی مقالات)
+   - /turath-library            (مکتبۃ تراث الشاملہ — ۸,۶۰۹ کتب مع آن لائن مطالعہ و PDF)
+   - /more                      (اطراف، متفق علیہ، علل، مشکل الآثار، مصطلح، امثال، شماریات)

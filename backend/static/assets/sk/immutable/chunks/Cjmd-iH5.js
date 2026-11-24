@@ -1,0 +1,2 @@
+import{$ as e,Ct as t,Gt as n,Ht as r,St as i,W as a,Z as o,bt as s,ht as c,n as l,q as u,z as d}from"./BDCxsaCy.js";var f=e(`<p class="mt-1 text-sm text-muted-foreground"> </p>`),p=e(`<header class="mb-8 sm:mb-10"><h1 class="font-serif text-title font-bold text-balance"> </h1> <!> <!></header>`);function m(e,m){let h=l(m,`subtitle`,3,``);var g=p(),_=s(g),v=i(_,!0),y=t(_,2),b=e=>{var t=f(),n=i(t,!0);c(()=>u(n,h())),o(e,t)};d(y,e=>{h()&&e(b)});var x=t(y,2);a(x,()=>m.children??n),r(g),c(()=>u(v,m.title)),o(e,g)}export{m as t};
+//# sourceMappingURL=Cjmd-iH5.js.map

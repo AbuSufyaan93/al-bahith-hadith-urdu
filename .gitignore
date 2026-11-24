@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+*.pyc
+cloud_data/
+datasets_raw/
+exports/
+database/*.db
+database/*.db-*
