@@ -1,0 +1,2 @@
+import{i as e}from"./43iLYmkY.js";var t=e=>`ﮌ`+String.fromCharCode(64396+e+(e>37?33:0)),n=t=>`۝${e(t)}`,r=e=>`/quran/${e.chapter_id}/${e.verse_number}`;export{t as n,r,n as t};
+//# sourceMappingURL=xiJ_rN6Q.js.map

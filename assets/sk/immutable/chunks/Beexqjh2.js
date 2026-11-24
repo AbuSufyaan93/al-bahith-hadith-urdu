@@ -1,0 +1,2 @@
+import{At as e,st as t}from"./BDCxsaCy.js";import{t as n}from"./VIFw4fiC.js";function r(r,i){{let a=e(()=>[{href:`/scholar-opinions/judgment`,label:`في الحكم على الحديث`,active:i.current===`judgment`},{href:`/scholar-opinions/sciences`,label:`في علوم الحديث`,active:i.current===`sciences`}]);n(r,{label:`أقوال العلماء`,get tabs(){return t(a)}})}}export{r as t};
+//# sourceMappingURL=Beexqjh2.js.map

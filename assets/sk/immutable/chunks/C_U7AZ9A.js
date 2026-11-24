@@ -1,0 +1,2 @@
+import{At as e,st as t}from"./BDCxsaCy.js";import{t as n}from"./VIFw4fiC.js";function r(r,i){{let a=e(()=>[{href:`/atraf`,label:`قائمة الأطراف`,active:i.current===`list`},{href:`/atraf/agreed`,label:`المتفق عليه والزوائد`,active:i.current===`agreed`},{href:`/atraf/by-chain`,label:`الأطراف على المسانيد`,active:i.current===`by-chain`}]);n(r,{label:`الأطراف`,get tabs(){return t(a)}})}}export{r as t};
+//# sourceMappingURL=C_U7AZ9A.js.map

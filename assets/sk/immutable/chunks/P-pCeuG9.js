@@ -1,0 +1,2 @@
+var e=typeof document<`u`,t=n();function n(){return e&&window?.navigator?.userAgent&&(/iP(ad|hone|od)/.test(window.navigator.userAgent)||window?.navigator?.maxTouchPoints>2&&/iPad|Macintosh/.test(window?.navigator.userAgent))}function r(e){return e instanceof HTMLElement}function i(e){return e instanceof Element||e instanceof SVGElement}export{t as i,i as n,r,e as t};
+//# sourceMappingURL=P-pCeuG9.js.map

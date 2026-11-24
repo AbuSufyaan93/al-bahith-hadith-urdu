@@ -1,0 +1,703 @@
+/* ==========================================================================
+   الباحث الحديثي — Lossless Salafi Urdu & Rekhta Lexicon Bridge (v2)
+   100% Native Visual & Typographic Match with https://hadeeth.com/
+   ========================================================================== */
+
+@font-face {
+  font-family: "IBM Plex Sans Arabic";
+  src: url("../fonts/plex-sans-arabic-400-arabic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans Arabic";
+  src: url("../fonts/plex-sans-arabic-500-arabic.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans Arabic";
+  src: url("../fonts/plex-sans-arabic-600-arabic.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "MehrNastaliqWeb";
+  src: url("./fonts/MehrNastaliqWeb.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JameelNooriNastaleeq";
+  src: url("./fonts/JameelNooriNastaleeq.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SakkalMajallaBold";
+  src: url("./fonts/SakkalMajallaBold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "NotoNastaliqUrdu";
+  src: url("./fonts/NotoNastaliqUrdu-Variable.ttf") format("truetype");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+.sk-display-contents {
+  display: contents;
+}
+
+:root {
+  --ur-ui-font: "IBM Plex Sans Arabic", "SakkalMajallaBold", system-ui, -apple-system, sans-serif;
+  --ur-font-family: "JameelNooriNastaleeq", "NotoNastaliqUrdu", "MehrNastaliqWeb", "IBM Plex Sans Arabic", serif;
+  --ur-font-scale: 1;
+  --ab-accent: #1b5880;
+  --ab-accent-soft: rgba(27, 88, 128, 0.05);
+  --ab-surface: #ffffff;
+  --ab-surface-muted: #f8f9fa;
+  --ab-border: #c5ced6;
+  --ab-text: #1f2428;
+  --ab-muted: #525a62;
+}
+
+html.dark {
+  --ab-accent: #66beff;
+  --ab-accent-soft: rgba(102, 190, 255, 0.085);
+  --ab-surface: #1b1b1b;
+  --ab-surface-muted: #242424;
+  --ab-border: #484848;
+  --ab-text: #ededed;
+  --ab-muted: #b2b8be;
+}
+
+/* Match hadeeth.com Encyclopedia (`/(site)/*`) terracotta accent automatically */
+body:has(header .ms-auto) {
+  --ab-accent: #9e3b24;
+  --ab-accent-soft: rgba(158, 59, 36, 0.05);
+}
+
+html.dark body:has(header .ms-auto) {
+  --ab-accent: #d97757;
+  --ab-accent-soft: rgba(217, 119, 87, 0.085);
+}
+
+/* Unified Arabic+Urdu Shaping Fix:
+   `Kitab` has a partial unicode-range without Urdu `ہ/ک/ے/گ/ں/ٹ/پ/چ/ڈ/ڑ`.
+   Any UI node localized to Urdu (`[data-ur-localized="1"]`) uses `IBM Plex Sans Arabic`
+   which covers the full U+0600-06FF + U+FB50-FDFF block with zero mid-word font splits! */
+html[data-albahith-lang="ur"] [data-ur-localized="1"] {
+  font-family: var(--ur-ui-font) !important;
+  letter-spacing: 0 !important;
+}
+
+/* Ensure search inputs shape both Urdu (`نماز، نیت`) and Arabic (`إنما الأعمال`) seamlessly */
+html[data-albahith-lang="ur"] #search-input input,
+html[data-albahith-lang="ur"] input[type="search"],
+html[data-albahith-lang="ur"] input[type="text"] {
+  font-family: var(--ur-ui-font) !important;
+}
+
+/* Pure Arabic Mode (`عربي`): hide all Urdu blocks so layout is 100% identical to hadeeth.com */
+html[data-albahith-lang="ar"] .ur-hadith-block,
+html[data-albahith-lang="ar"] .ur-hukm-inline,
+html[data-albahith-lang="ar"] .ur-sharh-block,
+html[data-albahith-lang="ar"] .ur-enc-translation,
+html[data-albahith-lang="ar"] .ur-col-sub,
+html[data-albahith-lang="ar"] .ur-tx-btn {
+  display: none !important;
+}
+
+/* Home Instant Search (`/`) Salafi Urdu Hadith Translation Block */
+.ur-hadith-block {
+  display: block;
+  margin-block: 0.5rem 0.35rem;
+  padding-block: 0.48rem 0.56rem;
+  padding-inline: 0.85rem;
+  border-inline-start: 3px solid var(--ab-accent);
+  background: var(--ab-accent-soft);
+  border-radius: 4px;
+  font-family: var(--ur-font-family) !important;
+  font-size: calc(1.02em * var(--ur-font-scale));
+  line-height: 2.28;
+  overflow: visible;
+  color: var(--ab-text);
+  text-align: start;
+  word-spacing: 0.03em;
+}
+
+.ur-hadith-block mark,
+.ur-enc-translation mark {
+  color: var(--highlight-color, var(--ab-accent));
+  background: transparent;
+  font-weight: 700;
+}
+
+.ur-hukm-inline {
+  font-family: var(--ur-ui-font) !important;
+  font-size: 0.9em;
+  line-height: 1.65;
+  margin-inline-start: 0.25rem;
+}
+
+.ur-sharh-block {
+  margin-block-start: 0.6rem;
+  padding-block: 0.58rem;
+  padding-inline: 0.85rem;
+  border-block-start: 1px dashed var(--ab-border);
+  border-inline-start: 3px solid var(--ab-accent);
+  background: var(--ab-accent-soft);
+  border-radius: 4px;
+  font-family: var(--ur-font-family) !important;
+  font-size: calc(1em * var(--ur-font-scale));
+  line-height: 2.25;
+  overflow: visible;
+  color: var(--ab-text);
+  text-align: start;
+}
+
+.sharh-ar-body {
+  font-family: "Kitab", "IBM Plex Sans Arabic", serif;
+  line-height: 1.95;
+  padding-block: 0.25rem;
+  padding-inline: 0.2rem;
+}
+
+/* Encyclopedia (`/(site)/*`) Salafi Urdu Translation Card */
+.ur-enc-translation {
+  margin-block: 0.7rem 0.35rem;
+  padding-block: 0.62rem 0.7rem;
+  padding-inline: 0.95rem;
+  border-inline-start: 3px solid var(--ab-accent);
+  background: var(--ab-accent-soft);
+  border-radius: 6px;
+  font-family: var(--ur-font-family) !important;
+  font-size: calc(1.14rem * var(--ur-font-scale));
+  line-height: 2.28;
+  overflow: visible;
+  color: var(--ab-text);
+  text-align: start;
+}
+
+.ur-enc-translation .ur-enc-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--ab-accent);
+  border: 1px solid rgba(27, 88, 128, 0.32);
+  border-radius: 999px;
+  padding-block: 0.06rem;
+  padding-inline: 0.55rem;
+  margin-block-end: 0.25rem;
+  font-family: var(--ur-ui-font) !important;
+}
+
+.ur-enc-sharh {
+  margin-block-start: 0.5rem;
+  padding-block-start: 0.45rem;
+  border-block-start: 1px dashed var(--ab-border);
+  font-size: calc(1.05rem * var(--ur-font-scale));
+  line-height: 2.24;
+}
+
+.ur-col-sub {
+  display: block;
+  margin-top: 0.2rem;
+  font-family: var(--ur-font-family) !important;
+  font-size: calc(0.95rem * var(--ur-font-scale));
+  line-height: 1.85;
+  color: var(--ab-accent);
+  font-weight: 400;
+}
+
+.ur-tx-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.45rem;
+  padding: 0.18rem 0.65rem;
+  border: 1px solid var(--ab-border);
+  border-radius: 999px;
+  background: var(--ab-surface);
+  color: var(--ab-muted);
+  font-family: var(--ur-ui-font) !important;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.ur-tx-btn:hover {
+  border-color: var(--ab-accent);
+  color: var(--ab-accent);
+}
+
+/* Compact Native Top Header Bar (100% Harmonious with `hadeeth.com` Minimalist Monochrome Chrome) */
+#albahith-topbar {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  background: var(--ab-surface);
+  border: 1px solid var(--ab-border);
+  border-radius: 6px;
+  font-family: var(--ur-ui-font) !important;
+  font-size: 12px;
+  line-height: 1.25;
+  direction: rtl;
+  user-select: none;
+}
+
+/* On `/` (`/(home)`), keep top-left 100% pure like `image_2.png` (all tools live inside `☰` drawer & `إعدادات`) */
+#albahith-topbar.is-home-mode {
+  display: none !important;
+}
+
+/* On `/(site)/*`, sit inline inside `header .ms-auto` right next to the theme toggle */
+#albahith-topbar.is-site-mode {
+  position: static;
+  margin-inline-end: 4px;
+  background: transparent;
+}
+
+#albahith-topbar button {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--ab-muted);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-family: var(--ur-ui-font) !important;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+#albahith-topbar button:hover {
+  color: var(--ab-text);
+  background: rgba(128, 128, 128, 0.1);
+}
+
+#albahith-topbar button.is-active {
+  background: rgba(128, 128, 128, 0.15);
+  color: var(--ab-text);
+  font-weight: 600;
+}
+
+#albahith-topbar.is-site-mode button.is-active {
+  background: var(--ab-accent);
+  color: #ffffff;
+}
+
+#albahith-topbar .ab-sep {
+  width: 1px;
+  height: 13px;
+  background: var(--ab-border);
+  margin: 0 1px;
+}
+
+/* Font & Size Settings Popover (anchored neatly under topbar or centered above drawer) */
+#albahith-font-popover {
+  position: fixed;
+  top: 44px;
+  left: 12px;
+  z-index: 100020;
+  width: 265px;
+  padding: 12px 14px;
+  background: var(--ab-surface);
+  border: 1px solid var(--ab-border);
+  border-radius: 8px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+  direction: rtl;
+  font-family: var(--ur-ui-font) !important;
+  font-size: 13px;
+  color: var(--ab-text);
+}
+
+#albahith-font-popover[hidden] {
+  display: none !important;
+}
+
+#albahith-font-popover .ab-pop-title {
+  font-weight: 600;
+  font-size: 12.5px;
+  margin-bottom: 8px;
+  color: var(--ab-accent);
+}
+
+#albahith-font-popover .ab-font-opt {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 8px;
+  margin-bottom: 4px;
+  border: 1px solid var(--ab-border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ab-text);
+  font-family: var(--ur-ui-font) !important;
+  cursor: pointer;
+  font-size: 12.5px;
+}
+
+#albahith-font-popover .ab-font-opt.is-selected {
+  border-color: var(--ab-accent);
+  background: var(--ab-accent-soft);
+  color: var(--ab-accent);
+  font-weight: 600;
+}
+
+#albahith-font-popover .ab-scale-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--ab-border);
+}
+
+#albahith-font-popover .ab-scale-btn {
+  border: 1px solid var(--ab-border);
+  background: transparent;
+  color: var(--ab-text);
+  border-radius: 5px;
+  width: 28px;
+  height: 25px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+/* Rekhta & Qari 283,601-Word Urdu-Arabic Lexicon Modal */
+#albahith-lexicon-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100030;
+  background: rgba(0, 0, 0, 0.48);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  direction: rtl;
+}
+
+#albahith-lexicon-overlay[hidden] {
+  display: none !important;
+}
+
+#albahith-lexicon-card {
+  width: 100%;
+  max-width: 580px;
+  max-height: 82vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--ab-surface);
+  color: var(--ab-text);
+  border: 1px solid var(--ab-border);
+  border-radius: 10px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  font-family: var(--ur-ui-font) !important;
+}
+
+#albahith-lexicon-card header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--ab-border);
+  background: var(--ab-surface-muted);
+}
+
+#albahith-lexicon-card header h3 {
+  margin: 0;
+  font-family: var(--ur-ui-font) !important;
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--ab-accent);
+}
+
+#albahith-lexicon-card .ab-lx-close {
+  border: 1px solid var(--ab-border);
+  background: transparent;
+  color: var(--ab-text);
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+#albahith-lexicon-card .ab-lx-searchbar {
+  display: flex;
+  gap: 8px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--ab-border);
+}
+
+#albahith-lexicon-card .ab-lx-searchbar input {
+  flex: 1;
+  margin: 0;
+  padding: 6px 10px;
+  border: 1px solid var(--ab-border);
+  border-radius: 6px;
+  background: var(--ab-surface-muted);
+  color: var(--ab-text);
+  font-family: var(--ur-ui-font) !important;
+  font-size: 0.95rem;
+}
+
+#albahith-lexicon-card .ab-lx-searchbar button {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  background: var(--ab-accent);
+  color: #fff;
+  font-family: var(--ur-ui-font) !important;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+#albahith-lexicon-body {
+  padding: 12px 16px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.ab-lx-item {
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  border: 1px solid var(--ab-border);
+  border-radius: 8px;
+  background: var(--ab-surface-muted);
+}
+
+.ab-lx-word {
+  font-family: "Kitab", var(--ur-ui-font), serif;
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--ab-accent);
+}
+
+.ab-lx-root {
+  font-size: 0.8rem;
+  color: var(--ab-muted);
+  margin-inline-start: 8px;
+}
+
+.ab-lx-meaning {
+  margin-top: 3px;
+  font-family: var(--ur-font-family) !important;
+  font-size: 1.04rem;
+  line-height: 2;
+  color: var(--ab-text);
+}
+
+@media (max-width: 640px) {
+  #albahith-topbar.is-home-mode {
+    inset-block-start: 8px;
+    inset-inline-end: 8px;
+  }
+  #albahith-topbar button {
+    padding-block: 4px;
+    padding-inline: 8px;
+    font-size: 11.5px;
+  }
+}
+
+/* WCAG 2.2 AA Focus Visibility & Mobile >= 48x48px Coarse-Pointer Touch Targets */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2.5px solid var(--ab-accent) !important;
+  outline-offset: 2px !important;
+}
+
+@media (pointer: coarse) {
+  .ur-tx-btn,
+  #albahith-lexicon-card .ab-lx-close,
+  #albahith-lexicon-card .ab-lx-searchbar button,
+  #albahith-research-card .ab-rs-btn,
+  #albahith-research-card .ab-rs-close,
+  .ab-staged-actions button {
+    min-width: 48px;
+    min-height: 48px;
+  }
+}
+
+/* Scholarly Hybrid RAG, 3-Tier Living Memory & Staged Proposal Modal */
+#albahith-research-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100035;
+  background: rgba(0, 0, 0, 0.52);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  direction: rtl;
+}
+
+#albahith-research-overlay[hidden] {
+  display: none !important;
+}
+
+#albahith-research-card {
+  width: 100%;
+  max-width: 680px;
+  max-height: 86vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--ab-surface);
+  color: var(--ab-text);
+  border: 1px solid var(--ab-border);
+  border-radius: 10px;
+  box-shadow: 0 20px 52px rgba(0, 0, 0, 0.28);
+  overflow: hidden;
+  font-family: var(--ur-ui-font) !important;
+}
+
+#albahith-research-card header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 11px;
+  padding-inline: 16px;
+  border-block-end: 1px solid var(--ab-border);
+  background: var(--ab-surface-muted);
+}
+
+#albahith-research-card header h3 {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--ab-accent);
+}
+
+.ab-rs-tabs {
+  display: flex;
+  gap: 6px;
+  padding-block: 8px;
+  padding-inline: 16px;
+  border-block-end: 1px solid var(--ab-border);
+  background: var(--ab-surface);
+}
+
+.ab-rs-tab {
+  padding-block: 5px;
+  padding-inline: 12px;
+  border: 1px solid var(--ab-border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ab-muted);
+  font-family: var(--ur-ui-font) !important;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.ab-rs-tab.is-active {
+  background: var(--ab-accent);
+  border-color: var(--ab-accent);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.ab-rs-body {
+  padding-block: 14px;
+  padding-inline: 16px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.ab-abstain-box {
+  padding-block: 12px;
+  padding-inline: 14px;
+  border-inline-start: 4px solid #b45309;
+  background: rgba(180, 83, 9, 0.08);
+  border-radius: 6px;
+  font-family: var(--ur-font-family) !important;
+  font-size: 1.06rem;
+  line-height: 2.25;
+}
+
+.ab-staged-card {
+  padding-block: 10px;
+  padding-inline: 12px;
+  margin-block-end: 10px;
+  border: 1px solid var(--ab-border);
+  border-inline-start: 4px solid var(--ab-accent);
+  border-radius: 8px;
+  background: var(--ab-surface-muted);
+}
+
+.ab-staged-diff {
+  margin-block: 6px;
+  padding-block: 6px;
+  padding-inline: 10px;
+  border-radius: 5px;
+  background: var(--ab-surface);
+  border: 1px dashed var(--ab-border);
+  font-family: var(--ur-font-family) !important;
+  line-height: 2.24;
+}
+
+.ab-staged-risk {
+  font-size: 0.8rem;
+  color: var(--ab-muted);
+  margin-block-end: 8px;
+}
+
+.ab-staged-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ab-mem-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-block: 8px;
+  padding-inline: 10px;
+  margin-block-end: 6px;
+  border: 1px solid var(--ab-border);
+  border-radius: 6px;
+  background: var(--ab-surface-muted);
+}
+
+/* Development-Only Hidden Component Inspector (`?__inspector=1`) */
+#albahith-dev-inspector {
+  position: fixed;
+  inset: 0;
+  z-index: 100090;
+  overflow-y: auto;
+  padding-block: 20px;
+  padding-inline: 20px;
+  background: var(--ab-surface);
+  color: var(--ab-text);
+  direction: rtl;
+  font-family: var(--ur-ui-font) !important;
+}
+
