@@ -55,31 +55,47 @@ FORCE_UPDATE_FILES = {
 }
 
 
+import time
+
+
 def run_gdrive(*args: str, timeout: int = 1800) -> str:
-    res = subprocess.run(["gdrive", *args], capture_output=True, text=True, check=True, timeout=timeout)
-    return res.stdout.strip()
+    last_err: Exception | None = None
+    for attempt in range(3):
+        try:
+            res = subprocess.run(["gdrive", *args], capture_output=True, text=True, check=True, timeout=timeout)
+            return res.stdout.strip()
+        except Exception as exc:
+            last_err = exc
+            time.sleep(0.8 * (attempt + 1))
+    raise RuntimeError(f"gdrive command failed after 3 attempts: {args}: {last_err}")
 
 
 def get_children_map(parent_id: str) -> Dict[str, Dict[str, Any]]:
-    out = run_gdrive("readonly", "ls", parent_id, "--json")
-    if not out:
-        return {}
-    data = json.loads(out)
-    items = data.get("files") if isinstance(data, dict) else data
-    mapping: Dict[str, Dict[str, Any]] = {}
-    for it in items or []:
-        if isinstance(it, dict) and it.get("name") and it.get("id"):
-            mapping[it["name"]] = {
-                "id": it["id"],
-                "mimeType": it.get("mimeType", ""),
-                "size": int(it["size"]) if str(it.get("size") or "").isdigit() else -1,
-            }
-    return mapping
+    for attempt in range(3):
+        out = run_gdrive("readonly", "ls", parent_id, "--max", "500", "--json")
+        if out:
+            data = json.loads(out)
+            items = data.get("files") if isinstance(data, dict) else data
+            mapping: Dict[str, Dict[str, Any]] = {}
+            for it in items or []:
+                if isinstance(it, dict) and it.get("name") and it.get("id"):
+                    mapping[it["name"]] = {
+                        "id": it["id"],
+                        "mimeType": it.get("mimeType", ""),
+                        "size": int(it["size"]) if str(it.get("size") or "").isdigit() else -1,
+                    }
+            return mapping
+        time.sleep(0.6 * (attempt + 1))
+    return {}
 
 
 def ensure_drive_folder(name: str, parent_id: str, existing: Dict[str, Dict[str, Any]]) -> str:
     if name in existing and "folder" in existing[name].get("mimeType", ""):
         return existing[name]["id"]
+    refreshed_first = get_children_map(parent_id)
+    if name in refreshed_first and "folder" in refreshed_first[name].get("mimeType", ""):
+        existing.update(refreshed_first)
+        return refreshed_first[name]["id"]
     out = run_gdrive("mutate", "mkdir", name, "--parent", parent_id, "--json")
     try:
         parsed = json.loads(out)
@@ -90,6 +106,7 @@ def ensure_drive_folder(name: str, parent_id: str, existing: Dict[str, Dict[str,
         pass
     refreshed = get_children_map(parent_id)
     if name in refreshed:
+        existing.update(refreshed)
         return refreshed[name]["id"]
     raise RuntimeError(f"Failed to resolve created Drive folder '{name}'")
 
@@ -198,6 +215,9 @@ def collect_sync_plan(
             else:
                 small_files.append(item)
         elif entry.is_dir() and entry.name not in SKIP_DIRS:
+            if entry.name == "cloud_data" and not FORCE_DB and entry.name in existing:
+                print("  [SKIP-VAULT] cloud_data/ (3.25 GB unchanged; pass --force-db to rescan)", flush=True)
+                continue
             rel_dir = f"{rel_prefix}/{entry.name}".lstrip("/")
             print(f"[DIR] {rel_dir}/", flush=True)
             sub_id = ensure_drive_folder(entry.name, drive_parent_id, existing)
